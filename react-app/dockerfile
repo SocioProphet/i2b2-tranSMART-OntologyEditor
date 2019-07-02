@@ -1,0 +1,22 @@
+FROM node:latest
+
+WORKDIR /
+RUN npx create-react-app app
+WORKDIR /app
+RUN npm install react-bootstrap bootstrap
+RUN npm install rc-tree
+RUN npm install react-redux
+RUN npm install redux
+RUN npm install axios
+RUN npm install redux-thunk
+RUN npm install react-contextmenu
+RUN npm install lodash
+# RUN npm install react-open-iconic-svg
+RUN npm install react-icons
+RUN npm install filepond react-filepond
+RUN npm audit fix
+RUN npm install react-router-dom
+RUN npm install react-router-bootstrap
+RUN npm install react-file-download 
+# RUN  sh start.sh
+ENTRYPOINT ["npm","start"]

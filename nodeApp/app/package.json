@@ -1,0 +1,16 @@
+{
+  "name": "api-i2b2tM-OntologyEditor",
+  "version": "1.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "express": "",
+    "nodemon": "",
+    "cors": "",
+    "mongoose": "",
+    "body-parser": "",
+    "multer": ""
+  },
+  "scripts": {
+    "start": "node ./app-v1.js"
+  }
+}

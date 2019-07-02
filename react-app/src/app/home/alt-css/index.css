@@ -1,0 +1,24 @@
+#side {
+  float: left;
+  overflow: auto;
+  height:94vh;
+  scrollbar-width: none;
+}
+#side::-webkit-scrollbar {
+    display: none;
+}
+
+#tree {
+  float: right;
+  overflow: auto;
+  height:94vh;
+}
+
+.cardBox {
+  max-width: 100%;
+}
+body, html {
+  margin: 0;
+  overflow-y: hidden;
+  height:100%;
+}

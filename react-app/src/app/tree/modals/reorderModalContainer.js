@@ -10,13 +10,14 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updateNodeName:(nodeId,label) => {
-    console.log(nodeId)
-    dispatch(projectDataOperations.updateNodeName(nodeId,label))
+  updateNodeNames:(renameItems) => {
+    renameItems.forEach(item =>{
+      console.log(item);
+      dispatch(projectDataOperations.updateNodeName(item.key,item.newLabel))
+    })
     dispatch(projectDataOperations.modalToggleShow())
     dispatch(projectDataOperations.modalDataClear())
   },
-
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(Reorder)

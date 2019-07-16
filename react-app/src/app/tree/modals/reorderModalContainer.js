@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateNodeNames:(renameItems) => {
     renameItems.forEach(item =>{
-      console.log(item);
+      // console.log(item);
       dispatch(projectDataOperations.updateNodeName(item.key,item.newLabel))
     })
     dispatch(projectDataOperations.modalToggleShow())

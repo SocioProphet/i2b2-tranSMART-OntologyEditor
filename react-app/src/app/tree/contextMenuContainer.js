@@ -40,6 +40,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   deleteNodes: (keys) => {
       dispatch(projectDataOperations.deleteNodes(keys));
+  },
+  addTrailingZero:(keys,data) => {
+    keys.forEach(key => {
+      dispatch(projectDataOperations.updateNodeName(key,"0"+data[key].label))
+    })
+
   }
 })
 

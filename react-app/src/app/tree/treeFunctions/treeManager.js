@@ -26,6 +26,7 @@ const buildTreeData = (data) =>{
     dataDesc['0-0'].data = {};
     dataDesc['0-0'].data.varName = 'ROOT';
     dataDesc['0-0'].key = '0-0';
+    dataDesc['0-0'].deleted = 0;
     dataDesc['0-0'].children = [];
     parser(data.tree,true,1,(item,isRoot,parentKey,index) => {
       // console.log(item);
@@ -39,6 +40,7 @@ const buildTreeData = (data) =>{
         dataDesc[parentKey].children.push(key);
       }
       dataDesc[key].label = item.text;
+      dataDesc[key].deleted = item.deleted?item.deleted:0;
       dataDesc[key].data = item.data || {};
       // dataDesc[key].data = item.data.varName;
       // dataDesc[key].data.varIdentifier = item.data.varIdentifier;

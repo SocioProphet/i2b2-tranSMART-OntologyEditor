@@ -1,5 +1,6 @@
 // app.js
 const express = require("express");
+const parse = require('csv-parse')
 const path = require('path');
 const fs = require('fs');
 const rl = require('readline');
@@ -329,13 +330,24 @@ app.get('/project',function(req,res){
 
           var n = 0;
           let titles = [];
+          const input = '"key_1","key_2"\n"value 1","value 2"'
           lineReader.on('line', function (line) {
             let nodeData = {}
             // console.log(line);
             n ++;
             if (n === 1){
+              console.log("parser",line);
               titles = line.split(",");
-              console.log(titles,titles.length);
+              test = []
+              parser = parse({
+                delimiter :","
+              }, function (err,records){
+                console.log("test");
+                console.log("parser",records[0]);
+              })
+              parser.write(line + "\n")
+              parser.end()
+              // console.log(titles,titles.length);
               if(titles.length < 3){
                 console.log('should close');
                 lineReader.close();

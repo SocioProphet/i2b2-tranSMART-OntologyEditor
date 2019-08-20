@@ -28,6 +28,10 @@ const MyContextMenu = ({show, position , showEditModal,addToClipBoard,selectedKe
     return transitive.some(c => data[c].data.externalKey != null);
   }
 
+  const isIdentifier = () => {
+    return selectedKeys.every(c => data[c].data.externalKey != null);
+  }
+
   const handleDelete = () => {
     let transitive=[...selectedKeys];
     // selectedKeys.map((item) => {
@@ -57,7 +61,7 @@ const MyContextMenu = ({show, position , showEditModal,addToClipBoard,selectedKe
        >
        Create node
      </MenuItem>
-     <SubMenu title="Edit" >
+     <SubMenu title="Edit" hoverDelay={100} >
        <MenuItem
          action
          data={{item:"RENAME"}}
@@ -112,6 +116,13 @@ const MyContextMenu = ({show, position , showEditModal,addToClipBoard,selectedKe
        onClick={handleDelete}
        >
        Delete nodes
+     </MenuItem>
+     <MenuItem
+       action eventKey="DELETEKEY"
+       disabled={!selectedKeys.length>0 || !isIdentifier()}
+       onClick={handleDelete}
+       >
+       Delete key node
      </MenuItem>
      <MenuItem
        data={{item:"REORDER"}}

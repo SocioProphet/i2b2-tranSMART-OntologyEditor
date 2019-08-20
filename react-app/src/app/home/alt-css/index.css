@@ -17,6 +17,10 @@
 .cardBox {
   max-width: 100%;
 }
+
+.striked{
+  text-decoration:line-through;
+}
 body, html {
   margin: 0;
   overflow-y: hidden;

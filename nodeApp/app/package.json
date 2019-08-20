@@ -8,7 +8,8 @@
     "cors": "",
     "mongoose": "",
     "body-parser": "",
-    "multer": ""
+    "multer": "",
+    "csv-parse": ""
   },
   "scripts": {
     "start": "node ./app-v1.js"

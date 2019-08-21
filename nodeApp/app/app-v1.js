@@ -1,6 +1,6 @@
 // app.js
 const express = require("express");
-const parse = require('csv-parse')
+const parse = require('csv-parse/lib/sync')
 const path = require('path');
 const fs = require('fs');
 const rl = require('readline');
@@ -169,19 +169,27 @@ app.get('/build',function(req,res){
         var n = 0;
         var fileDef;
         lineReader.on('line', function (line) {
+          const records = parse(line+"\n", {
+            columns: false,
+            skip_empty_lines: true,
+            quote:'"'
+          })
+          parsedLine = records[0]
           var newLine = line;
           if (n> 0){
-            var externalKey = (line.split(",")[0]) ?line.split(",")[0].replace(/\"/g,'') : "";
-            var path = (line.split(",")[1]) ? line.split(',')[1].replace(/\"/g,'') : "";
+            var externalKey = (parsedLine[0]) ?parsedLine[0].replace(/\"/g,'') : "";
+            var path = (parsedLine[1]) ? parsedLine[1].replace(/\"/g,'').replace(",","") : "";
             // console.log(pathModifs[line.split(',')[5].replace(/\"/g,'')]);
              if (pathModifs[externalKey]){
                newLine = newLine.replace(path,pathModifs[externalKey]);
              }
-             fileDef += "\n" + newLine.replace(/((,[^,]*){3})(,[^,]*)(,[^,]*)*$/,"$1$3");
+             // fileDef += "\n" + newLine.replace(/((,[^,]*){3})(,[^,]*)(,[^,]*)*$/,"$1$3");
+             fileDef += "\n" + newLine;
              // console.log(newLine);
             }else{
               // console.log(newLine);
-              fileDef = newLine.replace(/((,[^,]*){3})(,[^,]*)(,[^,]*)*$/,"$1$3");
+              // fileDef = newLine.replace(/((,[^,]*){3})(,[^,]*)(,[^,]*)*$/,"$1$3");
+              fileDef = newLine;
             }
             n++
         })
@@ -335,18 +343,19 @@ app.get('/project',function(req,res){
             let nodeData = {}
             // console.log(line);
             n ++;
+            const records = parse(line+"\n", {
+              columns: false,
+              skip_empty_lines: true,
+              quote:'"'
+            })
+            parsedLine = records[0]
+            // console.log("test",records[0]);
             if (n === 1){
-              console.log("parser",line);
-              titles = line.split(",");
+              // console.log("parser",line);
+              // titles = line.split(",");
               test = []
-              parser = parse({
-                delimiter :","
-              }, function (err,records){
-                console.log("test");
-                console.log("parser",records[0]);
-              })
-              parser.write(line + "\n")
-              parser.end()
+
+              titles = parsedLine
               // console.log(titles,titles.length);
               if(titles.length < 3){
                 console.log('should close');
@@ -354,13 +363,14 @@ app.get('/project',function(req,res){
               }
             }else{
                 titles.forEach((title,index) =>{
-                nodeData[title] = line.split(",")[index].replace(/\"/g,'');
+                // nodeData[title] = line.split(",")[index].replace(/\"/g,'');
+                nodeData[title] = parsedLine[index].replace(/\"/g,'');
               })
             }
 
-            var externalKey = (line.split(",")[0]) ?line.split(",")[0].replace(/\"/g,'') : "";
-            var path = (line.split(",")[1]) ? line.split(',')[1].replace(/\"/g,'') : "";
-            var varName = (line.split(",")[7]) ? line.split(",")[7].replace(/\"/g,'') : "";
+            var externalKey = (parsedLine[0]) ?parsedLine[0].replace(/\"/g,'') : "";
+            var path = (parsedLine[1]) ? parsedLine[1].replace(/\"/g,'').replace(",",'') : "";
+            var varName = (parsedLine[7]) ? parsedLine[7].replace(/\"/g,'') : "";
 
             // studyIdentifier = line.split(";")[4].replace(/\"/g,'') + ".p" + line.split(';')[13].replace(/\"/g,'');
 
@@ -371,7 +381,7 @@ app.get('/project',function(req,res){
 
             if (pathModifs[externalKey]){
               // if(! pathModifs[path].includes("MESA_Exam1Main")){
-              // console.log("Match ==> " + path +" " +pathModifs[path] );
+              console.log("Match ==> " + path +" " +pathModifs[path] );
               path = pathModifs[externalKey];
               // }
             }

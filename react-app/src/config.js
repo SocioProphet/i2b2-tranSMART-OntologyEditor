@@ -1,5 +1,6 @@
-const API_URL = "http://localhost:3000";
+const SHORT_API_URL = "localhost:3000";
+const API_URL = "http://"+SHORT_API_URL;
 
 export default {
-  API_URL,
+  API_URL,SHORT_API_URL
 }

@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { FilePond } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
+import config from '../../../config'
 
 const labelInput=React.createRef();
 const descriptionInput=React.createRef();
@@ -38,7 +39,7 @@ const ProjectModal = ({show,data,handleClose,createProject,fileProcessed,fileId,
           type="text"
           ref = {descriptionInput}
         />
-      <FilePond className="ml-3 mt-3" name={"file"} server="http://localhost:3000/files"
+      <FilePond className="ml-3 mt-3" name={"file"} server=config.API_URL+"/files"
            onprocessfile={fileProcessed} removefile={fileRemoved}>
         </FilePond>
         <Button className="ml-3 mt-3" variant="primary" onClick={createClick}>
